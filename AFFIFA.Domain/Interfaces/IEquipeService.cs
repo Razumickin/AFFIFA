@@ -2,8 +2,13 @@
 
 namespace AFFIFA.Domain.Interfaces
 {
-    internal interface IEquipeService
+    public interface IEquipeService
     {
-        List<Equipe> ListarEquipes();
+        Task<IEnumerable<Equipe>> ListEquipes();
+        Task<IEnumerable<Equipe>> ListEquipesByNome(string nome);
+        Task<Equipe> GetEquipe(int id);        
+        Task CreateEquipe(Equipe equipe);
+        Task UpdateEquipe(Equipe equipe);
+        Task DeleteEquipe(Equipe equipe);
     }
 }

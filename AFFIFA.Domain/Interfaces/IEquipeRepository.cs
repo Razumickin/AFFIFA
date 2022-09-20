@@ -2,8 +2,13 @@
 
 namespace AFFIFA.Domain.Interfaces
 {
-    internal interface IEquipeRepository
+    public interface IEquipeRepository
     {
-        Equipe[] GetEquipes();
+        Task<IEnumerable<Equipe>> GetEquipes();
+        Task<IEnumerable<Equipe>> GetEquipes(string nome);
+        Task<Equipe> GetEquipe(int id);
+        Task CreateEquipe(Equipe equipe);
+        Task UpdateEquipe(Equipe equipe);
+        Task DeleteEquipe(Equipe equipe);
     }
 }
