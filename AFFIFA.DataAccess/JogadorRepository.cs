@@ -5,87 +5,93 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AFFIFA.DataAccess
 {
-    public class EquipeRepository : IEquipeRepository
+    public class JogadorRepository : IJogadorRepository
     {
         private readonly DatabaseContext databaseContext;
-        public EquipeRepository()
+        public JogadorRepository()
         {
             databaseContext = new DatabaseContextFactory().CreateDbContext(new string[] { });
         }
 
-        public async Task<IEnumerable<Equipe>> GetEquipes()
+        public async Task<IEnumerable<Jogador>> GetJogadores()
         {
             try
             {
-                return await databaseContext.Equipes.ToListAsync();
+                return await databaseContext.Jogadores.ToListAsync();
             }
             catch
             {
+
                 throw;
             }
         }
 
-        public async Task<IEnumerable<Equipe>> GetEquipes(string nome)
+        public async Task<IEnumerable<Jogador>> GetJogadores(string nome)
         {
             try
             {
-                return await databaseContext.Equipes.Where(eqp => eqp.Nome.Contains(nome)).ToListAsync();
+                return await databaseContext.Jogadores.Where(jdg => jdg.NomeCompleto.Contains(nome) || jdg.NomeCurto.Contains(nome)).ToListAsync();
             }
             catch
             {
+
                 throw;
             }
         }
 
-        public async Task<Equipe> GetEquipe(int id)
+        public async Task<Jogador> GetJogador(int id)
         {
             try
             {
-                return await databaseContext.Equipes.FindAsync(id);
+                return await databaseContext.Jogadores.FindAsync(id);
             }
             catch
             {
+
                 throw;
             }
         }
 
-        public async Task CreateEquipe(Equipe equipe)
+        public async Task CreateJogador(Jogador jogador)
         {
             try
             {
-                databaseContext.Equipes.Add(equipe);
+                databaseContext.Jogadores.Add(jogador);
                 await databaseContext.SaveChangesAsync();
             }
             catch
             {
+
                 throw;
             }
         }
 
-        public async Task UpdateEquipe(Equipe equipe)
+        public async Task UpdateJogador(Jogador jogador)
         {
             try
             {
-                databaseContext.Entry(equipe).State = EntityState.Modified;
+                databaseContext.Entry(jogador).State = EntityState.Modified;
                 await databaseContext.SaveChangesAsync();
             }
             catch
             {
+
                 throw;
             }
         }
 
-        public async Task DeleteEquipe(Equipe equipe)
+        public async Task DeleteJogador(Jogador jogador)
         {
             try
             {
-                databaseContext.Equipes.Remove(equipe);
+                databaseContext.Jogadores.Remove(jogador);
                 await databaseContext.SaveChangesAsync();
             }
             catch
             {
+
                 throw;
             }
-        }
+        }        
     }
 }

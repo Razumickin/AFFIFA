@@ -22,5 +22,22 @@ namespace AFFIFA.DataAccess.Context
         public static OptionsBuild optionsBuild = new OptionsBuild();
         public DatabaseContext(DbContextOptions<DatabaseContext> contextOptions) : base(contextOptions) { }
         public DbSet<Equipe> Equipes { get; set; }
+        public DbSet<Jogador> Jogadores { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            /*
+             * EQUIPE
+             */
+            modelBuilder.Entity<Equipe>().Property(eqp => eqp.Nome).IsRequired();
+            modelBuilder.Entity<Equipe>().Property(eqp => eqp.Abreviacao).HasMaxLength(3).IsRequired();
+
+            /*
+             * JOGADOR
+             */
+            modelBuilder.Entity<Jogador>().Property(jgd => jgd.NomeCompleto).IsRequired();
+            modelBuilder.Entity<Jogador>().Property(jgd => jgd.NomeCurto).IsRequired();
+            modelBuilder.Entity<Jogador>().Property(jgd => jgd.SofifaId).IsRequired();
+            modelBuilder.Entity<Jogador>().HasOne(jgd => jgd.Equipe).WithMany(eqp => eqp.Jogadores).OnDelete(DeleteBehavior.SetNull);
+        }
     }
 }

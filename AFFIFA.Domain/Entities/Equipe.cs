@@ -1,14 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace AFFIFA.Domain.Entities
 {
     public class Equipe
     {
         public int Id { get; set; }
-        [Required]
-        public string? Nome { get; set; }
-        [Required]
-        [MaxLength(3)]
-        public string? Abreviacao { get; set; }
+        public string Nome { get; set; } = default!;
+        public string Abreviacao { get; set; } = default!;
+        public ICollection<Jogador>? Jogadores { get; set; }
     }
 }
