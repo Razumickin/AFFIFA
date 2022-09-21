@@ -11,19 +11,19 @@ namespace AFFIFA.Service
             this.equipeRepository = equipeRepository;
         }
 
-        public async Task<IEnumerable<Equipe>> ListEquipes()
+        public async Task<IEnumerable<Equipe>> GetAllEquipes()
         {
-            return await equipeRepository.GetEquipes();
+            return await equipeRepository.GetAllEquipes();
         }
 
-        public async Task<IEnumerable<Equipe>> ListEquipesByNome(string nome)
+        public async Task<IEnumerable<Equipe>> GetEquipesByNome(string nome)
         {
-            return await equipeRepository.GetEquipes(nome);
+            return await equipeRepository.GetEquipesByNome(nome);
         }
 
-        public async Task<Equipe> GetEquipe(int id)
+        public async Task<Equipe> GetEquipeById(int id)
         {
-            return await equipeRepository.GetEquipe(id);
+            return await equipeRepository.GetEquipeById(id);
         }
 
         public async Task CreateEquipe(Equipe equipe)

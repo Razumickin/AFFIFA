@@ -15,11 +15,11 @@ namespace AFFIFA.Api.Controllers
         }
 
         [HttpGet("List")]
-        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> GetJogadores()
+        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> ListJogadores()
         {
             try
             {
-                IEnumerable<Jogador> jogadores = await jogadorService.ListJogadores();
+                IEnumerable<Jogador> jogadores = await jogadorService.GetAllJogadores();
 
                 if(jogadores.Count() == 0)
                 {
@@ -35,11 +35,11 @@ namespace AFFIFA.Api.Controllers
         }
 
         [HttpGet("ListByNome/{nome}")]
-        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> GetJogadores(string nome)
+        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> ListJogadoresByNome(string nome)
         {
             try
             {
-                IEnumerable<Jogador> jogadores = await jogadorService.ListJogadoresByNome(nome);
+                IEnumerable<Jogador> jogadores = await jogadorService.GetJogadoresByNome(nome);
 
                 if (jogadores.Count() == 0)
                 {
@@ -54,12 +54,12 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("Get/{id}", Name = "GetJogador")]
-        public async Task<ActionResult<Jogador>> GetJogador(int id)
+        [HttpGet("Get/{id}", Name = "GetJogadorById")]
+        public async Task<ActionResult<Jogador>> GetJogadorById(int id)
         {
             try
             {
-                Jogador jogador = await jogadorService.GetJogador(id);
+                Jogador jogador = await jogadorService.GetJogadorById(id);
 
                 if (jogador == null)
                 {
@@ -80,7 +80,7 @@ namespace AFFIFA.Api.Controllers
             try
             {
                 await jogadorService.CreateJogador(jogador);
-                return CreatedAtRoute(nameof(GetJogador), new { id = jogador.Id }, jogador);
+                return CreatedAtRoute(nameof(GetJogadorById), new { id = jogador.Id }, jogador);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace AFFIFA.Api.Controllers
             {
                 if(jogador.Id != id)
                 {
-                    return BadRequest("Erro no formato da requisição");
+                    return BadRequest("Erro no formato da requisição.");
                 }
 
                 await jogadorService.UpdateJogador(jogador);
@@ -113,7 +113,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                Jogador jogador = await jogadorService.GetJogador(id);
+                Jogador jogador = await jogadorService.GetJogadorById(id);
 
                 if(jogador == null)
                 {

@@ -13,7 +13,7 @@ namespace AFFIFA.DataAccess
             databaseContext = new DatabaseContextFactory().CreateDbContext(new string[] { });
         }
 
-        public async Task<IEnumerable<Jogador>> GetJogadores()
+        public async Task<IEnumerable<Jogador>> GetAllJogadores()
         {
             try
             {
@@ -26,7 +26,7 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<IEnumerable<Jogador>> GetJogadores(string nome)
+        public async Task<IEnumerable<Jogador>> GetJogadoresByNome(string nome)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<Jogador> GetJogador(int id)
+        public async Task<Jogador> GetJogadorById(int id)
         {
             try
             {

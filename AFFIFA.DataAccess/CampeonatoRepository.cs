@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AFFIFA.DataAccess
 {
-    public class EquipeRepository : IEquipeRepository
+    public class CampeonatoRepository : ICampeonatoRepository
     {
         private readonly DatabaseContext databaseContext;
-        public EquipeRepository()
+        public CampeonatoRepository()
         {
             databaseContext = new DatabaseContextFactory().CreateDbContext(new string[] { });
         }
 
-        public async Task<IEnumerable<Equipe>> GetAllEquipes()
+        public async Task<IEnumerable<Campeonato>> GetAllCampeonatos()
         {
             try
             {
-                return await databaseContext.Equipes.ToListAsync();
+                return await databaseContext.Campeonatos.ToListAsync();
             }
             catch
             {
@@ -25,11 +25,11 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<IEnumerable<Equipe>> GetEquipesByNome(string nome)
+        public async Task<IEnumerable<Campeonato>> GetCampeonatosByNome(string nome)
         {
             try
             {
-                return await databaseContext.Equipes.Where(eqp => eqp.Nome.Contains(nome)).ToListAsync();
+                return await databaseContext.Campeonatos.Where(cmp => cmp.Nome.Contains(nome)).ToListAsync();
             }
             catch
             {
@@ -37,11 +37,11 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<Equipe> GetEquipeById(int id)
+        public async Task<Campeonato> GetCampeonatoById(int id)
         {
             try
             {
-                return await databaseContext.Equipes.FindAsync(id);
+                return await databaseContext.Campeonatos.FindAsync(id);
             }
             catch
             {
@@ -49,11 +49,11 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task CreateEquipe(Equipe equipe)
+        public async Task CreateCampeonato(Campeonato campeonato)
         {
             try
             {
-                databaseContext.Equipes.Add(equipe);
+                databaseContext.Campeonatos.Add(campeonato);
                 await databaseContext.SaveChangesAsync();
             }
             catch
@@ -62,11 +62,11 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task UpdateEquipe(Equipe equipe)
+        public async Task UpdateCampeonato(Campeonato campeonato)
         {
             try
             {
-                databaseContext.Entry(equipe).State = EntityState.Modified;
+                databaseContext.Entry(campeonato).State = EntityState.Modified;
                 await databaseContext.SaveChangesAsync();
             }
             catch
@@ -75,11 +75,11 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task DeleteEquipe(Equipe equipe)
+        public async Task DeleteCampeonato(Campeonato campeonato)
         {
             try
             {
-                databaseContext.Equipes.Remove(equipe);
+                databaseContext.Campeonatos.Remove(campeonato);
                 await databaseContext.SaveChangesAsync();
             }
             catch

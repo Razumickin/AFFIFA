@@ -4,9 +4,9 @@ namespace AFFIFA.Domain.Interfaces
 {
     public interface IEquipeService
     {
-        Task<IEnumerable<Equipe>> ListEquipes();
-        Task<IEnumerable<Equipe>> ListEquipesByNome(string nome);
-        Task<Equipe> GetEquipe(int id);        
+        Task<IEnumerable<Equipe>> GetAllEquipes();
+        Task<IEnumerable<Equipe>> GetEquipesByNome(string nome);
+        Task<Equipe> GetEquipeById(int id);        
         Task CreateEquipe(Equipe equipe);
         Task UpdateEquipe(Equipe equipe);
         Task DeleteEquipe(Equipe equipe);
