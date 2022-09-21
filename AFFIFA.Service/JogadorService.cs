@@ -11,19 +11,19 @@ namespace AFFIFA.Service
             this.jogadorRepository = jogadorRepository;
         }
 
-        public async Task<IEnumerable<Jogador>> ListJogadores()
+        public async Task<IEnumerable<Jogador>> GetAllJogadores()
         {
-            return await jogadorRepository.GetJogadores();
+            return await jogadorRepository.GetAllJogadores();
         }
 
-        public async Task<IEnumerable<Jogador>> ListJogadoresByNome(string nome)
+        public async Task<IEnumerable<Jogador>> GetJogadoresByNome(string nome)
         {
-            return await jogadorRepository.GetJogadores(nome);
+            return await jogadorRepository.GetJogadoresByNome(nome);
         }
 
-        public async Task<Jogador> GetJogador(int id)
+        public async Task<Jogador> GetJogadorById(int id)
         {
-            return await jogadorRepository.GetJogador(id);
+            return await jogadorRepository.GetJogadorById(id);
         }
 
         public async Task CreateJogador(Jogador jogador)

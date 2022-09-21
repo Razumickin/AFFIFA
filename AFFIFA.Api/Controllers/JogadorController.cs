@@ -19,7 +19,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                IEnumerable<Jogador> jogadores = await jogadorService.ListJogadores();
+                IEnumerable<Jogador> jogadores = await jogadorService.GetAllJogadores();
 
                 if(jogadores.Count() == 0)
                 {
@@ -39,7 +39,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                IEnumerable<Jogador> jogadores = await jogadorService.ListJogadoresByNome(nome);
+                IEnumerable<Jogador> jogadores = await jogadorService.GetJogadoresByNome(nome);
 
                 if (jogadores.Count() == 0)
                 {
@@ -59,7 +59,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                Jogador jogador = await jogadorService.GetJogador(id);
+                Jogador jogador = await jogadorService.GetJogadorById(id);
 
                 if (jogador == null)
                 {
@@ -113,7 +113,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                Jogador jogador = await jogadorService.GetJogador(id);
+                Jogador jogador = await jogadorService.GetJogadorById(id);
 
                 if(jogador == null)
                 {

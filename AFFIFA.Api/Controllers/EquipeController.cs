@@ -19,7 +19,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                IEnumerable<Equipe> equipes = await equipeService.ListEquipes();
+                IEnumerable<Equipe> equipes = await equipeService.GetAllEquipes();
 
                 if(equipes.Count() == 0)
                 {
@@ -39,7 +39,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                IEnumerable<Equipe> equipes = await equipeService.ListEquipesByNome(nome);
+                IEnumerable<Equipe> equipes = await equipeService.GetEquipesByNome(nome);
 
                 if (equipes.Count() == 0)
                 {
@@ -59,7 +59,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                Equipe equipe = await equipeService.GetEquipe(id);
+                Equipe equipe = await equipeService.GetEquipeById(id);
 
                 return Ok(equipe);
             }
@@ -107,7 +107,7 @@ namespace AFFIFA.Api.Controllers
         {
             try
             {
-                Equipe equipe = await equipeService.GetEquipe(id);
+                Equipe equipe = await equipeService.GetEquipeById(id);
                 
                 if(equipe == null)
                 {
