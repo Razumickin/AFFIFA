@@ -7,5 +7,6 @@ namespace AFFIFA.Domain.Entities
         public string Nome { get; set; } = default!;
         public string Abreviacao { get; set; } = default!;
         public ICollection<Jogador>? Jogadores { get; set; }
+        public ICollection<Campeonato>? Campeonatos { get; set; }
     }
 }

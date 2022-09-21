@@ -23,6 +23,7 @@ namespace AFFIFA.DataAccess.Context
         public DatabaseContext(DbContextOptions<DatabaseContext> contextOptions) : base(contextOptions) { }
         public DbSet<Equipe> Equipes { get; set; }
         public DbSet<Jogador> Jogadores { get; set; }
+        public DbSet<Campeonato> Campeonatos { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             /*
@@ -38,6 +39,11 @@ namespace AFFIFA.DataAccess.Context
             modelBuilder.Entity<Jogador>().Property(jgd => jgd.NomeCurto).IsRequired();
             modelBuilder.Entity<Jogador>().Property(jgd => jgd.SofifaId).IsRequired();
             modelBuilder.Entity<Jogador>().HasOne(jgd => jgd.Equipe).WithMany(eqp => eqp.Jogadores).OnDelete(DeleteBehavior.SetNull);
+
+            /*
+             * CAMPEONATO
+             */
+            modelBuilder.Entity<Campeonato>().Property(cmp => cmp.Nome).IsRequired();
         }
     }
 }
