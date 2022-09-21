@@ -23,7 +23,7 @@ namespace AFFIFA.Api.Controllers
 
                 if(equipes.Count() == 0)
                 {
-                    return NotFound("Não há equipes registradas.");
+                    return NotFound("Equipes não encontradas.");
                 }
 
                 return Ok(equipes);
@@ -43,14 +43,14 @@ namespace AFFIFA.Api.Controllers
 
                 if (equipes.Count() == 0)
                 {
-                    return NotFound($"Não há equipes registradas com o critério '{nome}'.");
+                    return NotFound("Equipes não encontradas.");
                 }
 
                 return Ok(equipes);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao listar equipes.");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -63,9 +63,9 @@ namespace AFFIFA.Api.Controllers
 
                 return Ok(equipe);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao listar equipes.");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -77,28 +77,28 @@ namespace AFFIFA.Api.Controllers
                 await equipeService.CreateEquipe(equipe);
                 return CreatedAtRoute(nameof(GetEquipe), new { id = equipe.Id }, equipe);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao cadastrar a equipe.");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpPut("Edit/{id}")]
-        public async Task<ActionResult> UpdateEquipe(int id, [FromBody] Equipe equipe)
+        public async Task<ActionResult> EditEquipe(int id, [FromBody] Equipe equipe)
         {
             try
             {
-                if (equipe.Id == id)
+                if (equipe.Id != id)
                 {
-                    await equipeService.UpdateEquipe(equipe);
-                    return NoContent();
+                    return BadRequest("Erro no formato da requisição.");
                 }
 
-                return BadRequest("Erro no formato da requisição.");
+                await equipeService.UpdateEquipe(equipe);
+                return Ok();             
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao editar a equipe.");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -109,17 +109,17 @@ namespace AFFIFA.Api.Controllers
             {
                 Equipe equipe = await equipeService.GetEquipe(id);
                 
-                if(equipe != null)
+                if(equipe == null)
                 {
-                    await equipeService.DeleteEquipe(equipe);   
-                    return Ok();
+                    return NotFound("Equipe não encontrada.");                    
                 }
 
-                return NotFound("Equipe não encontrada.");
+                await equipeService.DeleteEquipe(equipe);
+                return Ok();
             }
-            catch 
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao editar a equipe.");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

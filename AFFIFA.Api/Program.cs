@@ -12,10 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddDbContext<DatabaseContext>(options => );
-
+//Services
 builder.Services.AddScoped<IEquipeService, EquipeService>();
+builder.Services.AddScoped<IJogadorService, JogadorService>();
+
+//Repositories
 builder.Services.AddScoped<IEquipeRepository, EquipeRepository>();
+builder.Services.AddScoped<IJogadorRepository, JogadorRepository>();
 
 var app = builder.Build();
 
