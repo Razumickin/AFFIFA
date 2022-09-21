@@ -15,7 +15,7 @@ namespace AFFIFA.Api.Controllers
         }
 
         [HttpGet("List")]
-        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> GetJogadores()
+        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> ListJogadores()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace AFFIFA.Api.Controllers
         }
 
         [HttpGet("ListByNome/{nome}")]
-        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> GetJogadores(string nome)
+        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> ListJogadoresByNome(string nome)
         {
             try
             {
@@ -54,8 +54,8 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("Get/{id}", Name = "GetJogador")]
-        public async Task<ActionResult<Jogador>> GetJogador(int id)
+        [HttpGet("Get/{id}", Name = "GetJogadorById")]
+        public async Task<ActionResult<Jogador>> GetJogadorById(int id)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace AFFIFA.Api.Controllers
             try
             {
                 await jogadorService.CreateJogador(jogador);
-                return CreatedAtRoute(nameof(GetJogador), new { id = jogador.Id }, jogador);
+                return CreatedAtRoute(nameof(GetJogadorById), new { id = jogador.Id }, jogador);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace AFFIFA.Api.Controllers
             {
                 if(jogador.Id != id)
                 {
-                    return BadRequest("Erro no formato da requisição");
+                    return BadRequest("Erro no formato da requisição.");
                 }
 
                 await jogadorService.UpdateJogador(jogador);

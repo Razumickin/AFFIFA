@@ -1,5 +1,4 @@
 using AFFIFA.DataAccess;
-using AFFIFA.DataAccess.Context;
 using AFFIFA.Domain.Interfaces;
 using AFFIFA.Service;
 
@@ -15,10 +14,12 @@ builder.Services.AddSwaggerGen();
 //Services
 builder.Services.AddScoped<IEquipeService, EquipeService>();
 builder.Services.AddScoped<IJogadorService, JogadorService>();
+builder.Services.AddScoped<ICampeonatoService, CampeonatoService>();
 
 //Repositories
 builder.Services.AddScoped<IEquipeRepository, EquipeRepository>();
 builder.Services.AddScoped<IJogadorRepository, JogadorRepository>();
+builder.Services.AddScoped<ICampeonatoRepository, CampeonatoRepository>();
 
 var app = builder.Build();
 

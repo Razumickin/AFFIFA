@@ -15,7 +15,7 @@ namespace AFFIFA.Api.Controllers
         }
 
         [HttpGet("List")]
-        public async Task<ActionResult<IAsyncEnumerable<Equipe>>> GetEquipes()
+        public async Task<ActionResult<IAsyncEnumerable<Equipe>>> ListEquipes()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace AFFIFA.Api.Controllers
         }
 
         [HttpGet("ListByNome/{nome}")]
-        public async Task<ActionResult<IAsyncEnumerable<Equipe>>> GetEquipes(string nome)
+        public async Task<ActionResult<IAsyncEnumerable<Equipe>>> ListEquipesByNome(string nome)
         {
             try
             {
@@ -54,12 +54,17 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("Get/{id}", Name = "GetEquipe")]
-        public async Task<ActionResult<Equipe>> GetEquipe(int id)
+        [HttpGet("Get/{id}", Name = "GetEquipeById")]
+        public async Task<ActionResult<Equipe>> GetEquipeById(int id)
         {
             try
             {
                 Equipe equipe = await equipeService.GetEquipeById(id);
+
+                if (equipe == null)
+                {
+                    return NotFound("Equipe não encontrado.");
+                }
 
                 return Ok(equipe);
             }
@@ -75,7 +80,7 @@ namespace AFFIFA.Api.Controllers
             try
             {
                 await equipeService.CreateEquipe(equipe);
-                return CreatedAtRoute(nameof(GetEquipe), new { id = equipe.Id }, equipe);
+                return CreatedAtRoute(nameof(GetEquipeById), new { id = equipe.Id }, equipe);
             }
             catch (Exception ex)
             {
