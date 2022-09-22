@@ -5,25 +5,25 @@ namespace AFFIFA.Service
 {
     public class PartidaService : IPartidaService
     {
-        private readonly IPartidaService partidaService;
-        public PartidaService(IPartidaService partidaService)
+        private readonly IPartidaRepository partidaRepository;
+        public PartidaService(IPartidaRepository partidaRepository)
         {
-            this.partidaService = partidaService;
+            this.partidaRepository = partidaRepository;
         }
 
         public async Task<IEnumerable<Partida>> GetPartidasByCampeonatoId(int campeonatoId)
         {
-            return await partidaService.GetPartidasByCampeonatoId(campeonatoId);
+            return await partidaRepository.GetPartidasByCampeonatoId(campeonatoId);
         }
 
         public async Task CreatePartida(Partida partida)
         {
-            await partidaService.CreatePartida(partida);
+            await partidaRepository.CreatePartida(partida);
         }        
 
         public async Task UpdatePartida(Partida partida)
         {
-            await partidaService.UpdatePartida(partida);
+            await partidaRepository.UpdatePartida(partida);
         }
     }
 }

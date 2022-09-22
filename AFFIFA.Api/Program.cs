@@ -15,11 +15,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEquipeService, EquipeService>();
 builder.Services.AddScoped<IJogadorService, JogadorService>();
 builder.Services.AddScoped<ICampeonatoService, CampeonatoService>();
+builder.Services.AddScoped<IPartidaService, PartidaService>();
 
 //Repositories
 builder.Services.AddScoped<IEquipeRepository, EquipeRepository>();
 builder.Services.AddScoped<IJogadorRepository, JogadorRepository>();
 builder.Services.AddScoped<ICampeonatoRepository, CampeonatoRepository>();
+builder.Services.AddScoped<IPartidaRepository, PartidaRepository>();
 
 var app = builder.Build();
 
