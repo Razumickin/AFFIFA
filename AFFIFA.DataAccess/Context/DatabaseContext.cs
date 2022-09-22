@@ -21,10 +21,7 @@ namespace AFFIFA.DataAccess.Context
         }
         public static OptionsBuild optionsBuild = new OptionsBuild();
         public DatabaseContext(DbContextOptions<DatabaseContext> contextOptions) : base(contextOptions) { }
-        public DbSet<Equipe> Equipes { get; set; }
-        public DbSet<Jogador> Jogadores { get; set; }
-        public DbSet<Campeonato> Campeonatos { get; set; }
-        public DbSet<Partida> Partidas { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             /*
@@ -39,7 +36,6 @@ namespace AFFIFA.DataAccess.Context
             modelBuilder.Entity<Jogador>().Property(jgd => jgd.NomeCompleto).IsRequired();
             modelBuilder.Entity<Jogador>().Property(jgd => jgd.NomeCurto).IsRequired();
             modelBuilder.Entity<Jogador>().Property(jgd => jgd.SofifaId).IsRequired();
-            modelBuilder.Entity<Jogador>().HasOne(jgd => jgd.Equipe).WithMany(eqp => eqp.Jogadores).OnDelete(DeleteBehavior.SetNull);
 
             /*
              * CAMPEONATO
@@ -49,9 +45,13 @@ namespace AFFIFA.DataAccess.Context
             /*
              * PARTIDA
              */
-            modelBuilder.Entity<Partida>().HasOne(ptdEM => ptdEM.Mandante).WithMany(eqp => eqp.PartidasMandante).IsRequired().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Partida>().HasOne(ptdEV => ptdEV.Visitante).WithMany(eqp => eqp.PartidasVisitante).IsRequired().OnDelete(DeleteBehavior.NoAction);            
-            modelBuilder.Entity<Partida>().HasOne(ptd => ptd.Campeonato).WithMany(cmp => cmp.Partidas).IsRequired();
+            modelBuilder.Entity<Partida>().HasOne(ptd => ptd.Mandante).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Partida>().HasOne(ptd => ptd.Visitante).WithMany().OnDelete(DeleteBehavior.Restrict);
         }
+
+        public DbSet<Equipe> Equipes { get; set; } = default!;
+        public DbSet<Jogador> Jogadores { get; set; } = default!;
+        public DbSet<Campeonato> Campeonatos { get; set; } = default!;
+        public DbSet<Partida> Partidas { get; set; } = default!;
     }
 }
