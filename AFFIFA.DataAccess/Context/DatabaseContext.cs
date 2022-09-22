@@ -24,6 +24,7 @@ namespace AFFIFA.DataAccess.Context
         public DbSet<Equipe> Equipes { get; set; }
         public DbSet<Jogador> Jogadores { get; set; }
         public DbSet<Campeonato> Campeonatos { get; set; }
+        public DbSet<Partida> Partidas { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             /*
@@ -44,6 +45,13 @@ namespace AFFIFA.DataAccess.Context
              * CAMPEONATO
              */
             modelBuilder.Entity<Campeonato>().Property(cmp => cmp.Nome).IsRequired();
+
+            /*
+             * PARTIDA
+             */
+            modelBuilder.Entity<Partida>().HasOne(ptdEM => ptdEM.Mandante).WithMany(eqp => eqp.PartidasMandante).IsRequired().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Partida>().HasOne(ptdEV => ptdEV.Visitante).WithMany(eqp => eqp.PartidasVisitante).IsRequired().OnDelete(DeleteBehavior.NoAction);            
+            modelBuilder.Entity<Partida>().HasOne(ptd => ptd.Campeonato).WithMany(cmp => cmp.Partidas).IsRequired();
         }
     }
 }
