@@ -1,9 +1,10 @@
-﻿using AFFIFA.Domain.Entities;
+﻿using AFFIFA.Domain;
+using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 
 namespace AFFIFA.Service
 {
-    public class EquipeService : IEquipeService
+    public class EquipeService : EntidadeBase, IEquipeService
     {
         private readonly IEquipeRepository equipeRepository;
         public EquipeService(IEquipeRepository equipeRepository)

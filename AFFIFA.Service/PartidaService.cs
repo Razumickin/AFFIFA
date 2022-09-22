@@ -1,9 +1,10 @@
-﻿using AFFIFA.Domain.Entities;
+﻿using AFFIFA.Domain;
+using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 
 namespace AFFIFA.Service
 {
-    public class PartidaService : IPartidaService
+    public class PartidaService : EntidadeBase, IPartidaService
     {
         private readonly IPartidaRepository partidaRepository;
         public PartidaService(IPartidaRepository partidaRepository)

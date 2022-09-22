@@ -6,10 +6,10 @@ namespace AFFIFA.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EquipeController : ControllerBase
+    public class EquipesController : ControllerBase
     {
         private readonly IEquipeService equipeService;
-        public EquipeController(IEquipeService equipeService)
+        public EquipesController(IEquipeService equipeService)
         {
             this.equipeService = equipeService;
         }

@@ -1,7 +1,7 @@
 ﻿
 namespace AFFIFA.Domain.Entities
 {
-    public class Partida
+    public class Partida : EntidadeBase
     {
         public int Id { get; set; }
         public Equipe Mandante { get; set; } = default!;

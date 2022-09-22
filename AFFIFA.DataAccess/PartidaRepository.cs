@@ -1,11 +1,12 @@
 ﻿using AFFIFA.DataAccess.Context;
+using AFFIFA.Domain;
 using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AFFIFA.DataAccess
 {
-    public class PartidaRepository : IPartidaRepository
+    public class PartidaRepository : EntidadeBase, IPartidaRepository
     {
         private readonly DatabaseContext databaseContext;
         public PartidaRepository()

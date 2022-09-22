@@ -6,10 +6,10 @@ namespace AFFIFA.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PartidaController : ControllerBase
+    public class PartidasController : ControllerBase
     {
         private readonly IPartidaService partidaService;
-        public PartidaController(IPartidaService partidaService)
+        public PartidasController(IPartidaService partidaService)
         {
             this.partidaService = partidaService;
         }

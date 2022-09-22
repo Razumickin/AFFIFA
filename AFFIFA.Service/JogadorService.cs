@@ -1,9 +1,10 @@
-﻿using AFFIFA.Domain.Entities;
+﻿using AFFIFA.Domain;
+using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 
 namespace AFFIFA.Service
 {
-    public class JogadorService : IJogadorService
+    public class JogadorService : EntidadeBase, IJogadorService
     {
         private readonly IJogadorRepository jogadorRepository;
         public JogadorService(IJogadorRepository jogadorRepository)

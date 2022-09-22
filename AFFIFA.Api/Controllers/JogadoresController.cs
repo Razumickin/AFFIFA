@@ -6,10 +6,10 @@ namespace AFFIFA.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JogadorController : ControllerBase
+    public class JogadoresController : ControllerBase
     {
         private readonly IJogadorService jogadorService;
-        public JogadorController(IJogadorService jogadorService)
+        public JogadoresController(IJogadorService jogadorService)
         {
             this.jogadorService = jogadorService;
         }

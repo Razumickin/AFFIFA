@@ -1,7 +1,7 @@
 ﻿
 namespace AFFIFA.Domain.Entities
 {
-    public class Jogador
+    public class Jogador : EntidadeBase
     {
         public int Id { get; set; }
         public string NomeCompleto { get; set; } = default!;

@@ -1,11 +1,12 @@
 ﻿using AFFIFA.DataAccess.Context;
+using AFFIFA.Domain;
 using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AFFIFA.DataAccess
 {
-    public class EquipeRepository : IEquipeRepository
+    public class EquipeRepository : EntidadeBase, IEquipeRepository
     {
         private readonly DatabaseContext databaseContext;
         public EquipeRepository()
