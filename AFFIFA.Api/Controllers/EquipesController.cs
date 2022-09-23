@@ -1,10 +1,11 @@
 ﻿using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using static AFFIFA.Domain.EntidadeBase;
 
 namespace AFFIFA.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
     public class EquipesController : ControllerBase
     {
@@ -14,19 +15,13 @@ namespace AFFIFA.Api.Controllers
             this.equipeService = equipeService;
         }
 
-        [HttpGet("List")]
+        [HttpGet]
         public async Task<ActionResult<IAsyncEnumerable<Equipe>>> ListEquipes()
         {
             try
             {
-                IEnumerable<Equipe> equipes = await equipeService.GetAllEquipes();
-
-                if(equipes.Count() == 0)
-                {
-                    return NotFound("Equipes não encontradas.");
-                }
-
-                return Ok(equipes);
+                Resposta resposta = await equipeService.GetAllEquipes();
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch(Exception ex)
             {
@@ -34,19 +29,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("ListByNome/{nome}")]
-        public async Task<ActionResult<IAsyncEnumerable<Equipe>>> ListEquipesByNome(string nome)
+        [HttpGet("{equipeNome:alpha}")]
+        public async Task<ActionResult<IAsyncEnumerable<Equipe>>> ListEquipesByNome(string equipeNome)
         {
             try
             {
-                IEnumerable<Equipe> equipes = await equipeService.GetEquipesByNome(nome);
-
-                if (equipes.Count() == 0)
-                {
-                    return NotFound("Equipes não encontradas.");
-                }
-
-                return Ok(equipes);
+                Resposta resposta = await equipeService.GetEquipesByNome(equipeNome);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -54,19 +43,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("Get/{id}", Name = "GetEquipeById")]
-        public async Task<ActionResult<Equipe>> GetEquipeById(int id)
+        [HttpGet("equipe/{equipeId:int}", Name = "GetEquipeById")]
+        public async Task<ActionResult<Equipe>> GetEquipeById(int equipeId)
         {
             try
             {
-                Equipe equipe = await equipeService.GetEquipeById(id);
-
-                if (equipe == null)
-                {
-                    return NotFound("Equipe não encontrado.");
-                }
-
-                return Ok(equipe);
+                Resposta resposta = await equipeService.GetEquipeById(equipeId);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -74,13 +57,18 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         public async Task<ActionResult> CreateEquipe(Equipe equipe)
         {
             try
             {
-                await equipeService.CreateEquipe(equipe);
-                return CreatedAtRoute(nameof(GetEquipeById), new { id = equipe.Id }, equipe);
+                Resposta resposta = await equipeService.CreateEquipe(equipe);
+                if(resposta.Status == StatusCodes.Status200OK)
+                {
+                    return CreatedAtRoute(nameof(GetEquipeById), new { equipeId = equipe.Id }, equipe);
+                }
+
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -88,18 +76,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpPut("Edit/{id}")]
-        public async Task<ActionResult> EditEquipe(int id, [FromBody] Equipe equipe)
+        [HttpPut("equipe/{equipeId}")]
+        public async Task<ActionResult> EditEquipe(int equipeId, [FromBody] Equipe equipe)
         {
             try
             {
-                if (equipe.Id != id)
-                {
-                    return BadRequest("Erro no formato da requisição.");
-                }
-
-                await equipeService.UpdateEquipe(equipe);
-                return Ok();             
+                Resposta resposta = await equipeService.UpdateEquipe(equipeId, equipe);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -107,20 +90,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete/{id}")]
-        public async Task<ActionResult> DeleteEquipe(int id)
+        [HttpDelete("equipe/{equipeId}")]
+        public async Task<ActionResult> DeleteEquipe(int equipeId)
         {
             try
             {
-                Equipe equipe = await equipeService.GetEquipeById(id);
-                
-                if(equipe == null)
-                {
-                    return NotFound("Equipe não encontrada.");                    
-                }
-
-                await equipeService.DeleteEquipe(equipe);
-                return Ok();
+                Resposta resposta = await equipeService.DeleteEquipe(equipeId);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {

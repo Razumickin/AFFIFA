@@ -43,7 +43,7 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("{campeonatoId:int}", Name = "GetCampeonatoById")]
+        [HttpGet("campeonato/{campeonatoId:int}", Name = "GetCampeonatoById")]
         public async Task<ActionResult<Campeonato>> GetCampeonatoById(int campeonatoId)
         {
             try
@@ -90,7 +90,7 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpDelete("{campeonatoId}")]
+        [HttpDelete("campeonato/{campeonatoId}")]
         public async Task<ActionResult> DeleteCampeonato(int campeonatoId)
         {
             try

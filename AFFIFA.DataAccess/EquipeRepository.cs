@@ -14,78 +14,102 @@ namespace AFFIFA.DataAccess
             databaseContext = new DatabaseContextFactory().CreateDbContext(new string[] { });
         }
 
-        public async Task<IEnumerable<Equipe>> GetAllEquipes()
+        public async Task<Equipe.Resposta> GetAllEquipes()
         {
             try
             {
-                return await databaseContext.Equipes.ToListAsync();
+                IEnumerable<Equipe> equipes = await databaseContext.Equipes.ToListAsync();
+                if (equipes.Count() < 1)
+                {
+                    return new Resposta(Status404NotFound, "Registros não encontrados.");
+                }
+
+                return new Resposta(Status200OK, equipes);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task<IEnumerable<Equipe>> GetEquipesByNome(string nome)
+        public async Task<Equipe.Resposta> GetEquipesByNome(string campeonatoNome)
         {
             try
             {
-                return await databaseContext.Equipes.Where(eqp => eqp.Nome.Contains(nome)).ToListAsync();
+                IEnumerable<Equipe> equipes = await databaseContext.Equipes.Where(eqp => eqp.Nome.Contains(campeonatoNome)).ToListAsync();
+                if (equipes.Count() < 1)
+                {
+                    return new Resposta(Status404NotFound, campeonatoNome);
+                }
+
+                return new Resposta(Status200OK, equipes);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task<Equipe> GetEquipeById(int id)
+        public async Task<Equipe.Resposta> GetEquipeById(int equipeId)
         {
             try
             {
-                return await databaseContext.Equipes.FindAsync(id);
+                Equipe equipe = await databaseContext.Equipes.FindAsync(equipeId);
+                if(equipe == null)
+                {
+                    return new Resposta(Status404NotFound, equipeId);
+                }
+
+                return new Resposta(Status200OK, equipe);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task CreateEquipe(Equipe equipe)
+        public async Task<Equipe.Resposta> CreateEquipe(Equipe equipe)
         {
             try
             {
                 databaseContext.Equipes.Add(equipe);
                 await databaseContext.SaveChangesAsync();
+
+                return new Resposta(Status201Created, equipe);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task UpdateEquipe(Equipe equipe)
+        public async Task<Equipe.Resposta> UpdateEquipe(Equipe equipe)
         {
             try
             {
                 databaseContext.Entry(equipe).State = EntityState.Modified;
                 await databaseContext.SaveChangesAsync();
+
+                return new Resposta(Status200OK, equipe);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task DeleteEquipe(Equipe equipe)
+        public async Task<Equipe.Resposta> DeleteEquipe(Equipe equipe)
         {
             try
             {
                 databaseContext.Equipes.Remove(equipe);
                 await databaseContext.SaveChangesAsync();
+
+                return new Resposta(Status200OK, "");
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
     }

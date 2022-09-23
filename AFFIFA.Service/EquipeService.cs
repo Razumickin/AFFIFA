@@ -12,34 +12,45 @@ namespace AFFIFA.Service
             this.equipeRepository = equipeRepository;
         }
 
-        public async Task<IEnumerable<Equipe>> GetAllEquipes()
+        public async Task<Equipe.Resposta> GetAllEquipes()
         {
             return await equipeRepository.GetAllEquipes();
         }
 
-        public async Task<IEnumerable<Equipe>> GetEquipesByNome(string nome)
+        public async Task<Equipe.Resposta> GetEquipesByNome(string equipeNome)
         {
-            return await equipeRepository.GetEquipesByNome(nome);
+            return await equipeRepository.GetEquipesByNome(equipeNome);
         }
 
-        public async Task<Equipe> GetEquipeById(int id)
+        public async Task<Equipe.Resposta> GetEquipeById(int equipeId)
         {
-            return await equipeRepository.GetEquipeById(id);
+            return await equipeRepository.GetEquipeById(equipeId);
         }
 
-        public async Task CreateEquipe(Equipe equipe)
+        public async Task<Equipe.Resposta> CreateEquipe(Equipe equipe)
         {
-            await equipeRepository.CreateEquipe(equipe);
+            return await equipeRepository.CreateEquipe(equipe);
         }
 
-        public async Task UpdateEquipe(Equipe equipe)
+        public async Task<Equipe.Resposta> UpdateEquipe(int equipeId, Equipe equipe)
         {
-            await equipeRepository.UpdateEquipe(equipe);
+            if(equipe.Id != equipeId)
+            {
+                return new Resposta(Status400BadRequest, "Erro nos parâmetros da requisição.");
+            }
+
+            return await equipeRepository.UpdateEquipe(equipe);
         }
 
-        public async Task DeleteEquipe(Equipe equipe)
+        public async Task<Equipe.Resposta> DeleteEquipe(int equipeId)
         {
-            await equipeRepository.DeleteEquipe(equipe);
+            Resposta resposta = await GetEquipeById(equipeId);
+            if(resposta.Status != Status200OK)
+            {
+                return resposta;
+            }
+
+            return await equipeRepository.DeleteEquipe((Equipe)resposta.Objeto);
         }
     }
 }

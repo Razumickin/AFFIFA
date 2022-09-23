@@ -7,5 +7,10 @@ namespace AFFIFA.Domain.Entities
         public string Nome { get; set; } = default!;
         public string Abreviacao { get; set; } = default!;
         public ICollection<Campeonato>? Campeonatos { get; set; }
+
+        public Equipe()
+        {
+            Campeonatos = new HashSet<Campeonato>();
+        }
     }
 }
