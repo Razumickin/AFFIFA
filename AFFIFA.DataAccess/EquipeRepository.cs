@@ -14,7 +14,7 @@ namespace AFFIFA.DataAccess
             databaseContext = new DatabaseContextFactory().CreateDbContext(new string[] { });
         }
 
-        public async Task<Equipe.Resposta> GetAllEquipes()
+        public async Task<Resposta> GetAllEquipes()
         {
             try
             {
@@ -32,7 +32,7 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<Equipe.Resposta> GetEquipesByNome(string campeonatoNome)
+        public async Task<Resposta> GetEquipesByNome(string campeonatoNome)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<Equipe.Resposta> GetEquipeById(int equipeId)
+        public async Task<Resposta> GetEquipeById(int equipeId)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<Equipe.Resposta> CreateEquipe(Equipe equipe)
+        public async Task<Resposta> CreateEquipe(Equipe equipe)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<Equipe.Resposta> UpdateEquipe(Equipe equipe)
+        public async Task<Resposta> UpdateEquipe(Equipe equipe)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace AFFIFA.DataAccess
             }
         }
 
-        public async Task<Equipe.Resposta> DeleteEquipe(Equipe equipe)
+        public async Task<Resposta> DeleteEquipe(Equipe equipe)
         {
             try
             {

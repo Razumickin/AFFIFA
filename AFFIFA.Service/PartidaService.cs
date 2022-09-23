@@ -12,19 +12,19 @@ namespace AFFIFA.Service
             this.partidaRepository = partidaRepository;
         }
 
-        public async Task<IEnumerable<Partida>> GetPartidasByCampeonatoId(int campeonatoId)
+        public async Task<Resposta> GetPartidasByCampeonatoId(int campeonatoId)
         {
             return await partidaRepository.GetPartidasByCampeonatoId(campeonatoId);
         }
 
-        public async Task CreatePartida(Partida partida)
+        public async Task<Resposta> CreatePartida(Partida partida)
         {
-            await partidaRepository.CreatePartida(partida);
-        }        
+            return await partidaRepository.CreatePartida(partida);
+        }
 
-        public async Task UpdatePartida(Partida partida)
+        public async Task<Resposta> UpdatePartida(Partida partida)
         {
-            await partidaRepository.UpdatePartida(partida);
+            return await partidaRepository.UpdatePartida(partida);
         }
     }
 }

@@ -12,34 +12,45 @@ namespace AFFIFA.Service
             this.jogadorRepository = jogadorRepository;
         }
 
-        public async Task<IEnumerable<Jogador>> GetAllJogadores()
+        public async Task<Resposta> GetAllJogadores()
         {
             return await jogadorRepository.GetAllJogadores();
         }
 
-        public async Task<IEnumerable<Jogador>> GetJogadoresByNome(string nome)
+        public async Task<Resposta> GetJogadoresByNome(string jogadorNome)
         {
-            return await jogadorRepository.GetJogadoresByNome(nome);
+            return await jogadorRepository.GetJogadoresByNome(jogadorNome);
         }
 
-        public async Task<Jogador> GetJogadorById(int id)
+        public async Task<Resposta> GetJogadorById(int jogadorId)
         {
-            return await jogadorRepository.GetJogadorById(id);
+            return await jogadorRepository.GetJogadorById(jogadorId);
         }
 
-        public async Task CreateJogador(Jogador jogador)
+        public async Task<Resposta> CreateJogador(Jogador jogador)
         {
-            await jogadorRepository.CreateJogador(jogador);
+            return await jogadorRepository.CreateJogador(jogador);
         }
 
-        public async Task UpdateJogador(Jogador jogador)
+        public async Task<Resposta> UpdateJogador(int jogadorId, Jogador jogador)
         {
-            await jogadorRepository.UpdateJogador(jogador);
+            if(jogador.Id != jogadorId)
+            {
+                return new Resposta(Status400BadRequest, "Erro nos parâmetros da requisição.");
+            }
+
+            return await jogadorRepository.UpdateJogador(jogador);
         }
 
-        public async Task DeleteJogador(Jogador jogador)
+        public async Task<Resposta> DeleteJogador(int jogadorId)
         {
-            await jogadorRepository.DeleteJogador(jogador);
+            Resposta resposta = await GetJogadorById(jogadorId);
+            if (resposta.Status != Status200OK)
+            {
+                return resposta;
+            }
+
+            return await jogadorRepository.DeleteJogador((Jogador)resposta.Objeto);
         }
     }
 }

@@ -14,84 +14,102 @@ namespace AFFIFA.DataAccess
             databaseContext = new DatabaseContextFactory().CreateDbContext(new string[] { });
         }
 
-        public async Task<IEnumerable<Jogador>> GetAllJogadores()
+        public async Task<Resposta> GetAllJogadores()
         {
             try
             {
-                return await databaseContext.Jogadores.ToListAsync();
-            }
-            catch
-            {
+                IEnumerable<Jogador> jogadores = await databaseContext.Jogadores.ToListAsync();
+                if(jogadores.Count() < 1)
+                {
+                    return new Resposta(Status404NotFound, "Registros não encontrados.");
+                }
 
-                throw;
+                return new Resposta(Status200OK, jogadores);
+            }
+            catch (Exception ex)
+            {
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task<IEnumerable<Jogador>> GetJogadoresByNome(string nome)
+        public async Task<Resposta> GetJogadoresByNome(string jogadorNome)
         {
             try
             {
-                return await databaseContext.Jogadores.Where(jdg => jdg.NomeCompleto.Contains(nome) || jdg.NomeCurto.Contains(nome)).ToListAsync();
-            }
-            catch
-            {
+                IEnumerable<Jogador> jogadores = await databaseContext.Jogadores.Where(jdg => jdg.NomeCompleto.Contains(jogadorNome) || jdg.NomeCurto.Contains(jogadorNome)).ToListAsync();
+                if (jogadores.Count() < 1)
+                {
+                    return new Resposta(Status404NotFound, jogadorNome);
+                }
 
-                throw;
+                return new Resposta(Status200OK, jogadores);
+            }
+            catch (Exception ex)
+            {
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task<Jogador> GetJogadorById(int id)
+        public async Task<Resposta> GetJogadorById(int jogadorId)
         {
             try
             {
-                return await databaseContext.Jogadores.FindAsync(id);
-            }
-            catch
-            {
+                Jogador jogador = await databaseContext.Jogadores.FindAsync(jogadorId);
+                if(jogador == null)
+                {
+                    return new Resposta(Status404NotFound, jogadorId);
+                }
 
-                throw;
+                return new Resposta(Status200OK, jogador);
+            }
+            catch (Exception ex)
+            {
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task CreateJogador(Jogador jogador)
+        public async Task<Resposta> CreateJogador(Jogador jogador)
         {
             try
             {
                 databaseContext.Jogadores.Add(jogador);
                 await databaseContext.SaveChangesAsync();
-            }
-            catch
-            {
 
-                throw;
+                return new Resposta(Status201Created, jogador);
+            }
+            catch (Exception ex)
+            {
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task UpdateJogador(Jogador jogador)
+        public async Task<Resposta> UpdateJogador(Jogador jogador)
         {
             try
             {
                 databaseContext.Entry(jogador).State = EntityState.Modified;
                 await databaseContext.SaveChangesAsync();
-            }
-            catch
-            {
 
-                throw;
+                return new Resposta(Status200OK, jogador);
+            }
+            catch (Exception ex)
+            {
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }
 
-        public async Task DeleteJogador(Jogador jogador)
+        public async Task<Resposta> DeleteJogador(Jogador jogador)
         {
             try
             {
                 databaseContext.Jogadores.Remove(jogador);
                 await databaseContext.SaveChangesAsync();
-            }
-            catch
-            {
 
-                throw;
+                return new Resposta(Status200OK, "");
+            }
+            catch (Exception ex)
+            {
+                return new Resposta(Status500InternalServerError, ex.Message);
             }
         }        
     }

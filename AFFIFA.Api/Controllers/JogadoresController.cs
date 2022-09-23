@@ -1,10 +1,11 @@
 ﻿using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using static AFFIFA.Domain.EntidadeBase;
 
 namespace AFFIFA.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
     public class JogadoresController : ControllerBase
     {
@@ -14,19 +15,13 @@ namespace AFFIFA.Api.Controllers
             this.jogadorService = jogadorService;
         }
 
-        [HttpGet("List")]
+        [HttpGet]
         public async Task<ActionResult<IAsyncEnumerable<Jogador>>> ListJogadores()
         {
             try
             {
-                IEnumerable<Jogador> jogadores = await jogadorService.GetAllJogadores();
-
-                if(jogadores.Count() == 0)
-                {
-                    return NotFound("Jogadores não encontrados.");
-                }
-
-                return Ok(jogadores);
+                Resposta resposta = await jogadorService.GetAllJogadores();
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -34,19 +29,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("ListByNome/{nome}")]
-        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> ListJogadoresByNome(string nome)
+        [HttpGet("{jogadorNome:alpha}")]
+        public async Task<ActionResult<IAsyncEnumerable<Jogador>>> ListJogadoresByNome(string jogadorNome)
         {
             try
             {
-                IEnumerable<Jogador> jogadores = await jogadorService.GetJogadoresByNome(nome);
-
-                if (jogadores.Count() == 0)
-                {
-                    return NotFound("Jogadores não encontrados.");
-                }
-
-                return Ok(jogadores);
+                Resposta resposta = await jogadorService.GetJogadoresByNome(jogadorNome);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -54,19 +43,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpGet("Get/{id}", Name = "GetJogadorById")]
-        public async Task<ActionResult<Jogador>> GetJogadorById(int id)
+        [HttpGet("jogador/{jogadorId}", Name = "GetJogadorById")]
+        public async Task<ActionResult<Jogador>> GetJogadorById(int jogadorId)
         {
             try
             {
-                Jogador jogador = await jogadorService.GetJogadorById(id);
-
-                if (jogador == null)
-                {
-                    return NotFound("Jogador não encontrado.");
-                }
-
-                return Ok(jogador);
+                Resposta resposta = await jogadorService.GetJogadorById(jogadorId);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -74,13 +57,18 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         public async Task<ActionResult> CreateJogador(Jogador jogador)
         {
             try
             {
-                await jogadorService.CreateJogador(jogador);
-                return CreatedAtRoute(nameof(GetJogadorById), new { id = jogador.Id }, jogador);
+                Resposta resposta = await jogadorService.CreateJogador(jogador);
+                if(resposta.Status == StatusCodes.Status201Created)
+                {
+                    return CreatedAtRoute(nameof(GetJogadorById), new { jogadorId = jogador.Id }, jogador);
+                }
+
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -88,18 +76,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpPut("Edit/{id}")]
-        public async Task<ActionResult> EditJogador(int id, [FromBody] Jogador jogador)
+        [HttpPut("jogador/{jogadorId}")]
+        public async Task<ActionResult> EditJogador(int jogadorId, [FromBody] Jogador jogador)
         {
             try
             {
-                if(jogador.Id != id)
-                {
-                    return BadRequest("Erro no formato da requisição.");
-                }
-
-                await jogadorService.UpdateJogador(jogador);
-                return Ok();
+                Resposta resposta = await jogadorService.UpdateJogador(jogadorId, jogador);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -108,20 +91,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete/{id}")]
-        public async Task<ActionResult> DeleteJogador(int id)
+        [HttpDelete("jogador/{jogadorId}")]
+        public async Task<ActionResult> DeleteJogador(int jogadorId)
         {
             try
             {
-                Jogador jogador = await jogadorService.GetJogadorById(id);
-
-                if(jogador == null)
-                {
-                    return NotFound("Jogador não encontrado.");
-                }
-
-                await jogadorService.DeleteJogador(jogador);
-                return Ok();
+                Resposta resposta = await jogadorService.DeleteJogador(jogadorId);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {

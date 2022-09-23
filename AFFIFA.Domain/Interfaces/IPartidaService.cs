@@ -4,8 +4,8 @@ namespace AFFIFA.Domain.Interfaces
 {
     public interface IPartidaService
     {
-        Task<IEnumerable<Partida>> GetPartidasByCampeonatoId(int campeonatoId);
-        Task CreatePartida(Partida partida);
-        Task UpdatePartida(Partida partida);
+        Task<EntidadeBase.Resposta> GetPartidasByCampeonatoId(int campeonatoId);
+        Task<EntidadeBase.Resposta> CreatePartida(Partida partida);
+        Task<EntidadeBase.Resposta> UpdatePartida(Partida partida);
     }
 }

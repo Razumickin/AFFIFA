@@ -4,11 +4,11 @@ namespace AFFIFA.Domain.Interfaces
 {
     public interface IJogadorRepository
     {
-        Task<IEnumerable<Jogador>> GetAllJogadores();
-        Task<IEnumerable<Jogador>> GetJogadoresByNome(string nome);
-        Task<Jogador> GetJogadorById(int id);
-        Task CreateJogador(Jogador jogador);
-        Task UpdateJogador(Jogador jogador);
-        Task DeleteJogador(Jogador jogador);
+        Task<EntidadeBase.Resposta> GetAllJogadores();
+        Task<EntidadeBase.Resposta> GetJogadoresByNome(string jogadorNome);
+        Task<EntidadeBase.Resposta> GetJogadorById(int jogadorId);
+        Task<EntidadeBase.Resposta> CreateJogador(Jogador jogador);
+        Task<EntidadeBase.Resposta> UpdateJogador(Jogador jogador);
+        Task<EntidadeBase.Resposta> DeleteJogador(Jogador jogador);
     }
 }

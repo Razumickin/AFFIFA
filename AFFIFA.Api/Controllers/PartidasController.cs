@@ -1,10 +1,11 @@
 ﻿using AFFIFA.Domain.Entities;
 using AFFIFA.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using static AFFIFA.Domain.EntidadeBase;
 
 namespace AFFIFA.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
     public class PartidasController : ControllerBase
     {
@@ -14,13 +15,13 @@ namespace AFFIFA.Api.Controllers
             this.partidaService = partidaService;
         }
 
-        [HttpGet("ListByCampeonatoId/{campeonatoId}")]
-        public async Task<ActionResult<IAsyncEnumerable<Partida>>> ListPartidaByCampeonatoId(int campeonatoId)
+        [HttpGet]
+        public async Task<ActionResult<IAsyncEnumerable<Partida>>> ListPartidaByCampeonatoId([FromBody] int campeonatoId)
         {
             try
             {
-                IEnumerable<Partida> partidas = await partidaService.GetPartidasByCampeonatoId(campeonatoId);
-                return Ok(partidas);
+                Resposta resposta = await partidaService.GetPartidasByCampeonatoId(campeonatoId);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {
@@ -28,13 +29,13 @@ namespace AFFIFA.Api.Controllers
             }
         }
 
-        [HttpPut("EditGols")]
-        public async Task<ActionResult> EditGols(Partida partida)
+        [HttpPut]
+        public async Task<ActionResult> EditGols([FromBody] Partida partida)
         {
             try
             {
-                await partidaService.UpdatePartida(partida);
-                return Ok(partida);
+                Resposta resposta = await partidaService.UpdatePartida(partida);
+                return StatusCode(resposta.Status, resposta.Objeto);
             }
             catch (Exception ex)
             {

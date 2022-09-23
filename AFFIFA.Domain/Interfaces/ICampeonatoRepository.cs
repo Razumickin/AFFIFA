@@ -4,12 +4,12 @@ namespace AFFIFA.Domain.Interfaces
 {
     public interface ICampeonatoRepository
     {
-        Task<Campeonato.Resposta> GetAllCampeonatos();
-        Task<Campeonato.Resposta> GetCampeonatosByNome(string campeonatoNome);        
-        Task<Campeonato.Resposta> GetCampeonatoById(int campeonatoId);
-        Task<Campeonato.Resposta> CreateCampeonato(Campeonato campeonato);
-        Task<Campeonato.Resposta> UpdateCampeonato(Campeonato campeonato);
-        Task<Campeonato.Resposta> DeleteCampeonato(Campeonato campeonato);
-        Task<Campeonato.Resposta> CreateCampeonatoEquipe(Campeonato campeonato, Equipe equipe);
+        Task<EntidadeBase.Resposta> GetAllCampeonatos();
+        Task<EntidadeBase.Resposta> GetCampeonatosByNome(string campeonatoNome);        
+        Task<EntidadeBase.Resposta> GetCampeonatoById(int campeonatoId);
+        Task<EntidadeBase.Resposta> CreateCampeonato(Campeonato campeonato);
+        Task<EntidadeBase.Resposta> UpdateCampeonato(Campeonato campeonato);
+        Task<EntidadeBase.Resposta> DeleteCampeonato(Campeonato campeonato);
+        Task<EntidadeBase.Resposta> CreateCampeonatoEquipe(Campeonato campeonato, Equipe equipe);
     }
 }

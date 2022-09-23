@@ -63,7 +63,7 @@ namespace AFFIFA.Api.Controllers
             try
             {
                 Resposta resposta = await equipeService.CreateEquipe(equipe);
-                if(resposta.Status == StatusCodes.Status200OK)
+                if(resposta.Status == StatusCodes.Status201Created)
                 {
                     return CreatedAtRoute(nameof(GetEquipeById), new { equipeId = equipe.Id }, equipe);
                 }

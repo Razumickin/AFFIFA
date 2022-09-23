@@ -12,27 +12,27 @@ namespace AFFIFA.Service
             this.equipeRepository = equipeRepository;
         }
 
-        public async Task<Equipe.Resposta> GetAllEquipes()
+        public async Task<Resposta> GetAllEquipes()
         {
             return await equipeRepository.GetAllEquipes();
         }
 
-        public async Task<Equipe.Resposta> GetEquipesByNome(string equipeNome)
+        public async Task<Resposta> GetEquipesByNome(string equipeNome)
         {
             return await equipeRepository.GetEquipesByNome(equipeNome);
         }
 
-        public async Task<Equipe.Resposta> GetEquipeById(int equipeId)
+        public async Task<Resposta> GetEquipeById(int equipeId)
         {
             return await equipeRepository.GetEquipeById(equipeId);
         }
 
-        public async Task<Equipe.Resposta> CreateEquipe(Equipe equipe)
+        public async Task<Resposta> CreateEquipe(Equipe equipe)
         {
             return await equipeRepository.CreateEquipe(equipe);
         }
 
-        public async Task<Equipe.Resposta> UpdateEquipe(int equipeId, Equipe equipe)
+        public async Task<Resposta> UpdateEquipe(int equipeId, Equipe equipe)
         {
             if(equipe.Id != equipeId)
             {
@@ -42,7 +42,7 @@ namespace AFFIFA.Service
             return await equipeRepository.UpdateEquipe(equipe);
         }
 
-        public async Task<Equipe.Resposta> DeleteEquipe(int equipeId)
+        public async Task<Resposta> DeleteEquipe(int equipeId)
         {
             Resposta resposta = await GetEquipeById(equipeId);
             if(resposta.Status != Status200OK)
